@@ -4,7 +4,8 @@ void insert(int value);
 void display();
 void sort();
 void deleteNode(int value);
-// **********************************NODE******************************
+void createNode();
+// ***************************NODE******************************
 struct node
 {
   int data;
@@ -21,7 +22,8 @@ int main()
     printf("\n2.Display :");
     printf("\n3.shorting :");
     printf("\n4.delete node :");
-    printf("\n5.Exit :");
+    printf("\n5.Create new node :");
+    printf("\n6.Exit :");
     printf("\n[----------------------------------]");
     printf("\nEnter your choice : ");
     scanf("%d", &choice);
@@ -50,6 +52,10 @@ int main()
       break;
 
     case 5:
+      createNode();
+      break;
+
+    case 6:
       printf("\nThank you.....");
       break;
 
@@ -58,7 +64,7 @@ int main()
       break;
     }
 
-  } while (choice != 5);
+  } while (choice != 6);
 
   return 0;
 }
@@ -152,4 +158,28 @@ void deleteNode(int value)
   }
   prev->next = curr->next;
   free(curr);
+}
+//****************************CREATE NEW NODE FUNCTION******************************
+void createNode()
+{
+  int n;
+  struct node *curr;
+  printf("\nEnter the number of nodes : ");
+  scanf("%d", &n);
+  for (int i = 0; i < n; i++)
+  {
+    if (head == NULL)
+    {
+      head = (struct node *)malloc(sizeof(struct node));
+      curr = head;
+    }
+    else
+    {
+      curr->next = (struct node *)malloc(sizeof(struct node));
+      curr = curr->next;
+    }
+    printf("\nEnter data : ");
+    scanf("%d", &curr->data);
+    curr->next = NULL;
+  }
 }
