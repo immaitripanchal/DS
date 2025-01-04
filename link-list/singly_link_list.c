@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 void insert(int value);
 void display();
 struct node
@@ -28,8 +29,8 @@ int main()
       break;
 
     case 2:
-      printf("\n");
       display();
+      printf("\n");
       break;
 
     case 3:
@@ -74,7 +75,7 @@ void display()
   }
   while (curr != NULL)
   {
-    printf("%d ", curr->data);
+    printf("%d-->", curr->data);
     curr = curr->next;
   }
 }
