@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+//***********************FUNCTION DECLARATION*********************** */
 void insert(int value);
 void display();
 void sort();
 void deleteNode(int value);
 void createNode();
+void insertAtBegining(int value);
 // ***************************NODE******************************
 struct node
 {
@@ -23,7 +25,8 @@ int main()
     printf("\n3.shorting :");
     printf("\n4.delete node :");
     printf("\n5.Create new node :");
-    printf("\n6.Exit :");
+    printf("\n6.Insert at begining :");
+    printf("\n7.Exit :");
     printf("\n[----------------------------------]");
     printf("\nEnter your choice : ");
     scanf("%d", &choice);
@@ -56,6 +59,12 @@ int main()
       break;
 
     case 6:
+      printf("\nEnter value you want to insert at begining :");
+      scanf("%d", &value);
+      insertAtBegining(value);
+      break;
+
+    case 7:
       printf("\nThank you.....");
       break;
 
@@ -64,10 +73,11 @@ int main()
       break;
     }
 
-  } while (choice != 6);
+  } while (choice != 7);
 
   return 0;
 }
+//*******************************FUNCTION DEFINITION************************ */
 //****************************INSERT FUNCTION*****************************
 void insert(int value)
 {
@@ -182,4 +192,13 @@ void createNode()
     scanf("%d", &curr->data);
     curr->next = NULL;
   }
+}
+//**************************INSERT AT BEGINING FUNCTION************************
+void insertAtBegining(int value)
+{
+  struct node *new;
+  new = (struct node *)malloc(sizeof(struct node));
+  new->data = value;
+  new->next = head;
+  head = new;
 }
