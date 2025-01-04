@@ -7,6 +7,7 @@ void sort();
 void deleteNode(int value);
 void createNode();
 void insertAtBegining(int value);
+void searchElement(int value);
 // ***************************NODE******************************
 struct node
 {
@@ -26,7 +27,8 @@ int main()
     printf("\n4.delete node :");
     printf("\n5.Create new node :");
     printf("\n6.Insert at begining :");
-    printf("\n7.Exit :");
+    printf("\n7.Search for existing node :");
+    printf("\n8.Exit :");
     printf("\n[----------------------------------]");
     printf("\nEnter your choice : ");
     scanf("%d", &choice);
@@ -65,6 +67,11 @@ int main()
       break;
 
     case 7:
+      printf("\nEnter a value to search :");
+      scanf("%d", &value);
+      searchElement(value);
+      break;
+    case 8:
       printf("\nThank you.....");
       break;
 
@@ -73,7 +80,7 @@ int main()
       break;
     }
 
-  } while (choice != 7);
+  } while (choice != 8);
 
   return 0;
 }
@@ -201,4 +208,24 @@ void insertAtBegining(int value)
   new->data = value;
   new->next = head;
   head = new;
+}
+//**************************SEARCH ELEMENT FUNCTION************************
+void searchElement(int value)
+{
+  struct node *curr;
+  curr = head;
+  int found = 0;
+  while (curr != NULL)
+  {
+    if (curr->data == value)
+    {
+      found = 1;
+      break;
+    }
+    curr = curr->next;
+  }
+  if (found == 1)
+    printf("element found in link-list :");
+  else
+    printf("element not found in link-list :");
 }
