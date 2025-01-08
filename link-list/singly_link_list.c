@@ -8,6 +8,7 @@ void deleteNode(int value);
 void createNode();
 void insertAtBegining(int value);
 void searchElement(int value);
+void insertBefore(int value, int key);
 // ***************************NODE******************************
 struct node
 {
@@ -28,7 +29,8 @@ int main()
     printf("\n5.Create new node :");
     printf("\n6.Insert at begining :");
     printf("\n7.Search for existing node :");
-    printf("\n8.Exit :");
+    printf("\n8.insert node before :");
+    printf("\n9.Exit :");
     printf("\n[----------------------------------]");
     printf("\nEnter your choice : ");
     scanf("%d", &choice);
@@ -71,7 +73,17 @@ int main()
       scanf("%d", &value);
       searchElement(value);
       break;
+
     case 8:
+      printf("\nenter which value you want to insert :");
+      scanf("%d", &value);
+      int key;
+      printf("\nenter which value you want to insert before :");
+      scanf("%d", &key);
+      insertBefore(value, key);
+      break;
+
+    case 9:
       printf("\nThank you.....");
       break;
 
@@ -80,7 +92,7 @@ int main()
       break;
     }
 
-  } while (choice != 8);
+  } while (choice != 9);
 
   return 0;
 }
@@ -228,4 +240,31 @@ void searchElement(int value)
     printf("element found in link-list :");
   else
     printf("element not found in link-list :");
+}
+//**************************INSERT BEFORE FUNCTION************************
+void insertBefore(int value, int key)
+{
+  struct node *new, *curr, *prev;
+  new = (struct node *)malloc(sizeof(struct node));
+  new->data = value;
+  new->next = NULL;
+  if (head->data == key)
+  {
+    new->next = head;
+    head = new;
+    return;
+  }
+  curr = head;
+  while (curr != NULL && curr->data != key)
+  {
+    prev = curr;
+    curr = curr->next;
+  }
+  if (curr == NULL)
+  {
+    printf("\nKey not found in the list");
+    return;
+  }
+  prev->next = new;
+  new->next = curr;
 }
