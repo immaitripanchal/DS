@@ -19,7 +19,7 @@ struct node
 //******************************MAIN FUNCTION*******************************
 int main()
 {
-  int choice, value;
+  int choice, value, key;
   do
   {
     printf("\n[----------------MENU--------------]");
@@ -79,7 +79,6 @@ int main()
     case 8:
       printf("\nenter which value you want to insert :");
       scanf("%d", &value);
-      int key;
       printf("\nenter which value you want to insert before :");
       scanf("%d", &key);
       insertBefore(value, key);
@@ -88,7 +87,6 @@ int main()
     case 9:
       printf("\nenter which value you want to insert :");
       scanf("%d", &value);
-      int key;
       printf("\nenter which value you want to insert before :");
       scanf("%d", &key);
       insertAfter(value, key);
@@ -259,6 +257,11 @@ void insertBefore(int value, int key)
   new = (struct node *)malloc(sizeof(struct node));
   new->data = value;
   new->next = NULL;
+  if (head == NULL)
+  {
+    printf("\nList is empty");
+    return;
+  }
   if (head->data == key)
   {
     new->next = head;
@@ -281,3 +284,26 @@ void insertBefore(int value, int key)
 }
 //**************************INSERT AFTER FUNCTION************************
 void insertAfter(int value, int key)
+{
+  struct node *new, *curr;
+  new = (struct node *)malloc(sizeof(struct node));
+  new->data = value;
+  new->next = NULL;
+  if (head == NULL)
+  {
+    printf("\nList is empty");
+    return;
+  }
+  curr = head;
+  while (curr != NULL && curr->data != key)
+  {
+    curr = curr->next;
+  }
+  if (curr == NULL)
+  {
+    printf("\nKey not found in the list");
+    return;
+  }
+  new->next = curr->next;
+  curr->next = new;
+}
