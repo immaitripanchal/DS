@@ -9,6 +9,7 @@ void createNode();
 void insertAtBegining(int value);
 void searchElement(int value);
 void insertBefore(int value, int key);
+void insertAfter(int value, int key);
 // ***************************NODE******************************
 struct node
 {
@@ -30,7 +31,8 @@ int main()
     printf("\n6.Insert at begining :");
     printf("\n7.Search for existing node :");
     printf("\n8.insert node before :");
-    printf("\n9.Exit :");
+    printf("\n9.Insert node after :");
+    printf("\n10.Exit :");
     printf("\n[----------------------------------]");
     printf("\nEnter your choice : ");
     scanf("%d", &choice);
@@ -84,6 +86,15 @@ int main()
       break;
 
     case 9:
+      printf("\nenter which value you want to insert :");
+      scanf("%d", &value);
+      int key;
+      printf("\nenter which value you want to insert before :");
+      scanf("%d", &key);
+      insertAfter(value, key);
+      break;
+
+    case 10:
       printf("\nThank you.....");
       break;
 
@@ -92,7 +103,7 @@ int main()
       break;
     }
 
-  } while (choice != 9);
+  } while (choice != 10);
 
   return 0;
 }
@@ -268,3 +279,5 @@ void insertBefore(int value, int key)
   prev->next = new;
   new->next = curr;
 }
+//**************************INSERT AFTER FUNCTION************************
+void insertAfter(int value, int key)
