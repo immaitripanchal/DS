@@ -5,6 +5,8 @@ void insert();
 void display();
 void create();
 void deleteAtFirst();
+void deleteAtLast();
+void deleteAtPosition(int value);
 //***********************NODE***************************
 struct node
 {
@@ -110,4 +112,67 @@ void create()
 //**************************DELETE AT FIRST FUNCTION***********************
 void deleteAtFirst()
 {
+  if (head == NULL)
+  {
+    printf("\nList is empty");
+    return;
+  }
+  else
+  {
+    struct node *curr;
+    curr = head;
+    head = curr->next;
+    free(curr);
+  }
+}
+void deleteAtLast()
+{
+  if (head == NULL)
+  {
+    printf("\nList is empty");
+    return;
+  }
+  else
+  {
+    struct node *curr, *prev;
+    curr = head;
+    while (curr->next != NULL)
+    {
+      prev = curr;
+      curr = curr->next;
+    }
+    prev->next = NULL;
+    free(curr);
+  }
+}
+void deleteAtPosition(int value)
+{
+  if (head == NULL)
+  {
+    printf("\nList is empty");
+    return;
+  }
+  else
+  {
+    struct node *curr, *prev;
+    curr = head;
+    if (curr->data == value)
+    {
+      head = curr->next;
+      free(curr);
+      return;
+    }
+    while (curr->next != NULL && curr->data != value)
+    {
+      prev = curr;
+      curr = curr->next;
+    }
+    if (curr->next == NULL)
+    {
+      printf("\nElement not found");
+      return;
+    }
+    prev->next = curr->next;
+    free(curr);
+  }
 }
