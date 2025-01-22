@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 //***************************FUNCTION DECLARATION****************************
 void insert();
 void display();
@@ -10,6 +11,8 @@ void deleteAtPosition(int value);
 void insertAtFirst(int value);
 void insertBefore(int value, int key);
 void insertAfter(int value, int key);
+void insertAtLast(int value);
+void sort();
 //***********************NODE***************************
 struct node
 {
@@ -247,4 +250,50 @@ void insertAfter(int value, int key)
   }
   new->next = curr->next;
   curr->next = new;
+}
+//**************************INSERT AT LAST FUNCTION***********************
+void insertAtLast(int value)
+{
+  struct node *new, *curr;
+  new = (struct node *)malloc(sizeof(struct node));
+  new->data = value;
+  new->next = NULL;
+  if (head == NULL)
+  {
+    head = new;
+    return;
+  }
+  while (curr->next != NULL)
+  {
+    curr = curr->next;
+  }
+  curr->next = new;
+}
+//**************************SORT FUNCTION***********************
+void sort()
+
+{
+  struct node *i, *j, *min;
+
+  if (head == NULL || head->next == NULL)
+  {
+    return;
+  }
+  for (i = head; i->next != NULL; i++)
+  {
+    min = i;
+    for (j = i->next; j != NULL; j++)
+    {
+      if (j->data < min->data)
+      {
+        min = j;
+      }
+        }
+    if (min != i)
+    {
+      int temp = i->data;
+      i->data = min->data;
+      min->data = temp;
+    }
+  }
 }
