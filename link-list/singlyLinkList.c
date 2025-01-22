@@ -7,6 +7,9 @@ void create();
 void deleteAtFirst();
 void deleteAtLast();
 void deleteAtPosition(int value);
+void insertAtFirst(int value);
+void insertBefore(int value, int key);
+void insertAfter(int value, int key);
 //***********************NODE***************************
 struct node
 {
@@ -125,6 +128,7 @@ void deleteAtFirst()
     free(curr);
   }
 }
+//**************************DELETE AT LAST FUNCTION***********************
 void deleteAtLast()
 {
   if (head == NULL)
@@ -145,6 +149,7 @@ void deleteAtLast()
     free(curr);
   }
 }
+//**************************DELETE AT POSITION FUNCTION***********************
 void deleteAtPosition(int value)
 {
   if (head == NULL)
@@ -175,4 +180,71 @@ void deleteAtPosition(int value)
     prev->next = curr->next;
     free(curr);
   }
+}
+//**************************INSERT AT FIRST FUNCTION***********************
+void insertAtFirst(int value)
+{
+  struct node *new;
+  new = (struct node *)malloc(sizeof(struct node));
+  new->data = value;
+  new->next = head;
+  head = new;
+}
+//**************************INSERT BEFORE FUNCTION***********************
+void insertBefore(int value, int key)
+{
+  if (head == NULL)
+  {
+    printf("\nList is empty");
+    return;
+  }
+  struct node *new, *curr, *prev;
+  new = (struct node *)malloc(sizeof(struct node));
+  new->data = value;
+  new->next = NULL;
+  if (head->data == key)
+  {
+    new->next = head;
+    head = new;
+    return;
+  }
+  curr = head;
+  while (curr->next != NULL && curr->data != key)
+  {
+    prev = curr;
+    curr = curr->next;
+  }
+  if (curr->next == NULL)
+  {
+    printf("\nElement not found");
+    return;
+  }
+  new->next = curr;
+  prev->next = new;
+}
+//**************************INSERT AFTER FUNCTION***********************
+void insertAfter(int value, int key)
+{
+  struct node *new, *curr;
+  new = (struct node *)malloc(sizeof(struct node));
+  new->data = value;
+  new->next = NULL;
+  if (head->data == key)
+  {
+    new->next = head->next;
+    head->next = new;
+    return;
+  }
+  curr = head;
+  while (curr->next != NULL && curr->data != key)
+  {
+    curr = curr->next;
+  }
+  if (curr->next == NULL)
+  {
+    printf("\nElement not found");
+    return;
+  }
+  new->next = curr->next;
+  curr->next = new;
 }
