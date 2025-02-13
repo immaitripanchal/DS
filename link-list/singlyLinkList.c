@@ -13,6 +13,7 @@ void insertBefore(int value, int key);
 void insertAfter(int value, int key);
 void insertAtLast(int value);
 void sort();
+void reverse();
 //***********************NODE***************************
 struct node
 {
@@ -288,7 +289,7 @@ void sort()
       {
         min = j;
       }
-        }
+    }
     if (min != i)
     {
       int temp = i->data;
@@ -296,4 +297,19 @@ void sort()
       min->data = temp;
     }
   }
+}
+//**************************REVERSE FUNCTION***********************
+void reverse()
+{
+  struct node *prev, *current, *next;
+  prev = NULL;
+  current = head;
+  while (current != NULL)
+  {
+    next = current->next;
+    current->next = prev;
+    prev = current;
+    current = next;
+  }
+  head = prev;
 }
