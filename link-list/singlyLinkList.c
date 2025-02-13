@@ -133,7 +133,7 @@ void insert()
   struct node *new, *curr;
   new = (struct node *)malloc(sizeof(struct node));
   printf("\nEnter the value : ");
-  scanf("%d", new->data);
+  scanf("%d", &new->data);
   new->next = NULL;
   if (head == NULL)
   {
@@ -159,7 +159,7 @@ void display()
   }
   struct node *curr;
   curr = head;
-  while (curr->next != NULL)
+  while (curr != NULL)
   {
     printf("%d --> ", curr->data);
     curr = curr->next;
@@ -290,12 +290,12 @@ void insertBefore(int value, int key)
     return;
   }
   curr = head;
-  while (curr->next != NULL && curr->data != key)
+  while (curr != NULL && curr->data != key)
   {
     prev = curr;
     curr = curr->next;
   }
-  if (curr->next == NULL)
+  if (curr == NULL)
   {
     printf("\nElement not found");
     return;
@@ -317,11 +317,11 @@ void insertAfter(int value, int key)
     return;
   }
   curr = head;
-  while (curr->next != NULL && curr->data != key)
+  while (curr != NULL && curr->data != key)
   {
     curr = curr->next;
   }
-  if (curr->next == NULL)
+  if (curr == NULL)
   {
     printf("\nElement not found");
     return;
@@ -357,10 +357,10 @@ void sort()
   {
     return;
   }
-  for (i = head; i->next != NULL; i++)
+  for (i = head; i->next != NULL; i = i->next)
   {
     min = i;
-    for (j = i->next; j != NULL; j++)
+    for (j = i->next; j != NULL; j = j->next)
     {
       if (j->data < min->data)
       {
