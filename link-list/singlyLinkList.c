@@ -23,7 +23,7 @@ struct node
 //******************************MAIN FUNCTION*******************************
 int main()
 {
-  int choice;
+  int choice, val, key;
   do
   {
     printf("\n-------------------MENU---------------------");
@@ -46,6 +46,83 @@ int main()
 
     printf("\nEnter your choice : ");
     scanf("%d", &choice);
+
+    switch (choice)
+    {
+    case 1:
+      insert();
+      break;
+
+    case 2:
+      display();
+      break;
+
+    case 3:
+      create();
+      break;
+
+    case 4:
+      deleteAtFirst();
+      break;
+
+    case 5:
+      deleteAtLast();
+      break;
+
+    case 6:
+      printf("\nEnter the value to delete : ");
+      scanf("%d", &val);
+      deleteAtPosition(val);
+      break;
+
+    case 7:
+      printf("\nEnter the value to insert at first : ");
+      scanf("%d", &val);
+      insertAtFirst(val);
+      break;
+
+    case 8:
+      printf("\nEnter the value to insert : ");
+      scanf("%d", &val);
+      printf("\nEnter the value before which to insert : ");
+      scanf("%d", &key);
+      insertBefore(val, key);
+      break;
+
+    case 9:
+      printf("\nEnter the value to insert : ");
+      scanf("%d", &val);
+      printf("\nEnter the value after which to insert : ");
+      scanf("%d", &key);
+      insertAfter(val, key);
+      break;
+
+    case 10:
+      printf("\nEnter the value to insert at last : ");
+      scanf("%d", &val);
+      insertAtLast(val);
+      break;
+
+    case 11:
+      sort();
+      break;
+
+    case 12:
+      reverse();
+      break;
+
+    case 13:
+      printf("Work in progress :");
+      break;
+
+    case 14:
+      printf("Work in progress :");
+      break;
+
+    case 15:
+      printf("\nExiting the program...Thank you.....");
+      break;
+    }
 
   } while (choice != 15);
 }
