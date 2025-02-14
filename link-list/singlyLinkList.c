@@ -248,12 +248,12 @@ void deleteAtPosition(int value)
       free(curr);
       return;
     }
-    while (curr->next != NULL && curr->data != value)
+    while (curr != NULL && curr->data != value)
     {
       prev = curr;
       curr = curr->next;
     }
-    if (curr->next == NULL)
+    if (curr == NULL)
     {
       printf("\nElement not found");
       return;

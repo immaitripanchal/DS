@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 //***************************FUNCTION DECLARATION*********************************
-void create();
+void create(int val);
 void display();
 void delete(int val);
 void insertBefore(int val, int key);
@@ -41,7 +41,9 @@ int main()
     switch (choice)
     {
     case 1:
-      create();
+      printf("Enter how many element you want :");
+      scanf("%d", &val);
+      create(val);
       break;
 
     case 2:
@@ -97,3 +99,123 @@ int main()
   } while (choice != 10);
 }
 //*************************************FUNCTION DEFINITION***********************************
+//*************************************CREATE FUNCTION********************************
+void create(int val)
+{
+  struct node *new, *curr;
+  int data;
+  for (int i = 1; i <= val; i++)
+  {
+    printf("Enter value :");
+    scanf("%d", &data);
+    new = (struct node *)malloc(sizeof(struct node));
+    new->data = data;
+    new->prev = new->next = NULL;
+    if (head == NULL)
+    {
+      head = new;
+      curr = new;
+    }
+    else
+    {
+      new->prev = curr;
+      curr->next = new;
+      curr = new;
+    }
+  }
+}
+//*************************************DISPLAY***************************************
+void display()
+{
+  struct node *curr;
+  if (head == NULL)
+  {
+    printf("Link-list is empty :");
+    return;
+  }
+  else
+  {
+    curr = head;
+    while (curr != NULL)
+    {
+      printf("%d-->", curr->data);
+      curr = curr->next;
+    }
+  }
+}
+//*************************************DELETE FUNCTION*******************************
+void delete(int val)
+{
+  struct node *curr;
+  if (head == NULL)
+  {
+    printf("Link-list is empty :");
+    return;
+  }
+
+  curr = head;
+  if (head->data == val)
+  {
+    head = curr->next;
+    free(curr);
+    head->prev = NULL;
+    return;
+  }
+  else
+  {
+    while (curr != NULL && curr->data != val)
+    {
+      curr = curr->next;
+    }
+  }
+
+  if (curr == NULL)
+  {
+    printf("value does not exist :");
+    return;
+  }
+  if (curr->next == NULL)
+  {
+    curr->prev->next = NULL;
+    free(curr);
+    return;
+  }
+  curr->prev->next = curr->next;
+  curr->next->prev = curr->prev;
+  free(curr);
+}
+//*****************************INSERT BEFORE FUNCTION*****************************
+void insertBefore(int val, int key)
+{
+  struct node *new, *curr;
+  if (head == NULL)
+  {
+    printf("Link-list is empty :");
+    return;
+  }
+  new = (struct node *)malloc(sizeof(struct node));
+  new->data = val;
+  new->next = new->prev = NULL;
+  curr = head;
+  if (head->data == key)
+  {
+    new->next = head;
+    head->prev = new;
+    head = new;
+    return;
+  }
+  while (curr != NULL && curr->data != key)
+  {
+    curr = curr->next;
+  }
+  if (curr == NULL)
+  {
+    printf("value does not exist :");
+    return;
+  }
+  new->prev = curr->prev;
+  curr->prev->next = new;
+  new->next = curr;
+  curr->prev = new;
+  return;
+}
