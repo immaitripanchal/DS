@@ -20,7 +20,7 @@ struct node
 //*********************************MAIN FUNCTION**********************************
 int main()
 {
-  int choice, val;
+  int choice, val, key;
   do
   {
     printf("\n-----------------MENU-----------------");
@@ -41,6 +41,58 @@ int main()
     switch (choice)
     {
     case 1:
+      create();
+      break;
+
+    case 2:
+      display();
+      break;
+
+    case 3:
+      printf("Enter a value which you want to delete :");
+      scanf("%d", &val);
+      delete (val);
+      break;
+
+    case 4:
+      printf("Enter a value which you want to insert :");
+      scanf("%d", &val);
+      printf("Enter key :");
+      scanf("%d", &key);
+      insertBefore(val, key);
+      break;
+
+    case 5:
+      printf("Enter value which you want to insert :");
+      scanf("%d", &val);
+      printf("Enter key :");
+      scanf("%d", &key);
+      insertAfter(val, key);
+      break;
+
+    case 6:
+      printf("Enter value you want to insert :");
+      scanf("%d", &val);
+      insertBeg(val);
+      break;
+
+    case 7:
+      printf("Enter value you want to insert :");
+      scanf("%d", &val);
+      insertEnd(val);
+      break;
+
+    case 8:
+      reverse();
+      break;
+
+    case 9:
+      sort();
+      break;
+
+    case 10:
+      printf("Exiting program...........Thank you.........");
+      break;
     }
   } while (choice != 10);
 }
