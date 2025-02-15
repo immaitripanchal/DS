@@ -219,3 +219,7 @@ void insertBefore(int val, int key)
   curr->prev = new;
   return;
 }
+//****************************INSERT AFTER FUNCTION******************************************
+void insertAfter(int val, int key)
+{
+}
