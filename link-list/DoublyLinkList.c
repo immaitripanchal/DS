@@ -222,4 +222,68 @@ void insertBefore(int val, int key)
 //****************************INSERT AFTER FUNCTION******************************************
 void insertAfter(int val, int key)
 {
+  if (head == NULL)
+  {
+    printf("Link-list is empty :");
+    return;
+  }
+  struct node *curr, *new;
+  new = (struct node *)malloc(sizeof(struct node));
+  new->data = val;
+  new->prev = new->next = NULL;
+  curr = head;
+  while (curr != NULL && curr->data != key)
+  {
+    curr = curr->next;
+  }
+  if (curr == NULL)
+  {
+    printf("value does not exist :");
+    return;
+  }
+  if (curr->next == NULL)
+  {
+    new->prev = curr;
+    curr->next = new;
+  }
+  new->prev = curr;
+  new->next = curr->next;
+  curr->next = new;
+  new->next->prev = new;
+}
+//**********************************INSERT BEGINNING  FUNCTION*****************************
+void insertBeg(int val)
+{
+  struct node *new;
+  new = (struct node *)malloc(sizeof(struct node));
+  new->data = val;
+  new->next = new->prev = NULL;
+  if (head == NULL)
+  {
+    head = new;
+    return;
+  }
+  new->next = head;
+  head->prev = new;
+  head = new;
+}
+//*************************************INSERT AT END FUNCTION******************************
+void insertEnd(int val)
+{
+  struct node *curr, *new;
+  new = (struct node *)malloc(sizeof(struct node));
+  new->data = val;
+  new->next = new->prev = NULL;
+  if (head == NULL)
+  {
+    printf("Link-list is empty :");
+    return;
+  }
+  curr = head;
+  while (curr->next != NULL)
+  {
+    curr = curr->next;
+  }
+  curr->next = new;
+  new->prev = curr;
 }
