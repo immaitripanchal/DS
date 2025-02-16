@@ -245,6 +245,7 @@ void insertAfter(int val, int key)
   {
     new->prev = curr;
     curr->next = new;
+    return;
   }
   new->prev = curr;
   new->next = curr->next;
@@ -286,4 +287,14 @@ void insertEnd(int val)
   }
   curr->next = new;
   new->prev = curr;
+}
+//************************************REVERSE FUNCTION********************************* */
+void reverse()
+{
+  printf("work in progress.......");
+}
+//**********************************SORTING FUNCTION*********************************** */
+void sort()
+{
+  printf("work in progress.......");
 }
