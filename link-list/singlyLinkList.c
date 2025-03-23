@@ -341,6 +341,7 @@ void insertAtLast(int value)
     head = new;
     return;
   }
+  curr = head;
   while (curr->next != NULL)
   {
     curr = curr->next;
