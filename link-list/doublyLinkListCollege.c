@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-//-------------Function declaration--------------
+//-------------function declaration---------
 void create(int value);
 void insertAtBeg(int value);
 void insertAtEnd(int value);
@@ -16,9 +16,10 @@ void countNodes();
 void sort();
 void reverse();
 
-//-----------------Define structure----------------
+//------------- define structure------------
 struct node
 {
+  struct node *prev;
   int data;
   struct node *next;
 } *head = NULL;
@@ -143,47 +144,52 @@ int main()
   } while (choice != 15);
 }
 //---------------Function definition----------------
-//---------------create function-------------------
+//-----------------create function------------------
 void create(int value)
 {
-  struct node *new, *curr;
+  struct node *curr, *new;
   for (int i = 1; i <= value; i++)
   {
     new = (struct node *)malloc(sizeof(struct node));
     printf("Enter value :");
     scanf("%d", &new->data);
-    new->next = NULL;
+    new->next = new->prev = NULL;
     if (head == NULL)
     {
       head = new;
+      curr = new;
     }
     else
     {
-      curr = head;
-      while (curr->next != NULL)
-      {
-        curr = curr->next;
-      }
+      new->prev = curr;
       curr->next = new;
+      curr = new;
     }
   }
 }
-//-----------------insert At beginning function----------------
+//---------------------insert at beginning function---------------------
 void insertAtBeg(int value)
 {
   struct node *new;
   new = (struct node *)malloc(sizeof(struct node));
   new->data = value;
+  new->prev = new->next = NULL;
+  if (head == NULL)
+  {
+    head = new;
+    return;
+  }
   new->next = head;
+  head->prev = new;
   head = new;
 }
-//-----------------insert at last function------------
+//----------------------insert at end----------------------
 void insertAtEnd(int value)
 {
   struct node *new, *curr;
   new = (struct node *)malloc(sizeof(struct node));
   new->data = value;
-  new->next = NULL;
+  new->prev = new->next = NULL;
   if (head == NULL)
   {
     head = new;
@@ -195,204 +201,139 @@ void insertAtEnd(int value)
     curr = curr->next;
   }
   curr->next = new;
+  new->prev = curr;
 }
-//-----------------insert before function-------------------
+//----------------------insert before--------------------
 void insertBefore(int value, int key)
-{
-  struct node *new, *curr, *prev;
-  new = (struct node *)malloc(sizeof(struct node));
-  new->data = value;
-  new->next = NULL;
-  if (head == NULL)
-  {
-    printf("Link-list is empty....");
-    return;
-  }
-  else
-  {
-    if (head->data == key)
-    {
-      new->next = head;
-      head = new;
-      return;
-    }
-    else
-    {
-      curr = head;
-      prev = curr;
-      while (curr != NULL && curr->data != key)
-      {
-        prev = curr;
-        curr = curr->next;
-      }
-      if (curr == NULL)
-      {
-        printf("key not found..");
-        return;
-      }
-      new->next = curr;
-      prev->next = new;
-    }
-  }
-}
-//----------------insert after function-------------
-void insertAfter(int value, int key)
-{
-  struct node *new, *curr;
-  new = (struct node *)malloc(sizeof(struct node));
-  new->data = value;
-  new->next = NULL;
-  if (head == NULL)
-  {
-    printf("Link-list is empty....");
-    return;
-  }
-  else
-  {
-    if (head->data == key)
-    {
-      new->next = head->next;
-      head->next = new;
-      return;
-    }
-    else
-    {
-      curr = head;
-      while (curr != NULL && curr->data != key)
-      {
-        curr = curr->next;
-      }
-      if (curr == NULL)
-      {
-        printf("key doesn't exit...");
-        return;
-      }
-      new->next = curr->next;
-      curr->next = new;
-    }
-  }
-}
-//-----------------display function------------
-void display()
-{
-  if (head == NULL)
-  {
-    printf("Empty link-list...");
-    return;
-  }
-  struct node *curr;
-  curr = head;
-  while (curr != NULL)
-  {
-    printf("%d-->", curr->data);
-    curr = curr->next;
-  }
-}
-//-------------delete at beginning function------------
-void deleteAtBeg()
-{
-  if (head == NULL)
-  {
-    printf("Empty Link-list...");
-    return;
-  }
-  struct node *temp = head;
-  head = temp->next;
-  free(temp);
-}
-//---------------delete at last function----------
-void deleteAtEnd()
-{
-  if (head == NULL)
-  {
-    printf("Empty link-list...");
-    return;
-  }
-  if (head->next == NULL)
-  {
-    free(head);
-    head = NULL;
-    return;
-  }
-  struct node *temp = head;
-  struct node *prev = NULL;
-  while (temp->next != NULL)
-  {
-    prev = temp;
-    temp = temp->next;
-  }
-  prev->next = NULL;
-  free(temp);
-}
-//----------------delete before function-----------
-void deleteBefore(int key)
-{
-  if (head == NULL || head->next == NULL || head->data == key)
-  {
-    printf("deletion can't be done....");
-    return;
-  }
-  struct node *prev = NULL, *curr = head, *next = head->next;
-  if (next->data == key)
-  {
-    head = head->next;
-    free(curr);
-    return;
-  }
-  while (next != NULL && next->data != key)
-  {
-    prev = curr;
-    curr = next;
-    next = next->next;
-  }
-  if (next == NULL)
-  {
-    printf("value doesn't exist...");
-    return;
-  }
-  prev->next = curr->next;
-  free(curr);
-}
-void deleteAfter(int key)
-{
-  if (head == NULL || head->next == NULL)
-  {
-    printf("deletion can't be done...");
-    return;
-  }
-  struct node *curr = head;
-  while (curr != NULL && curr->data != key)
-  {
-    curr = curr->next;
-  }
-  if (curr == NULL)
-  {
-    printf("key doesn't exist..");
-    return;
-  }
-  struct node *temp = curr->next;
-  curr->next = temp->next;
-  free(temp);
-}
-//-------------------delete function-------------------
-void delete(int key)
 {
   if (head == NULL)
   {
     printf("link-list is empty...");
     return;
   }
-  struct node *prev, *curr;
-  curr = head;
+  struct node *new, *curr;
+  new = (struct node *)malloc(sizeof(struct node));
+  new->data = value;
+  new->prev = new->next = NULL;
+
   if (head->data == key)
   {
-    head = curr->next;
-    free(curr);
+    new->prev = head;
+    head->prev = new;
+    head = new;
     return;
   }
+  curr = head;
   while (curr != NULL && curr->data != key)
   {
-    prev = curr;
+    curr = curr->next;
+  }
+  if (curr == NULL)
+  {
+    printf("key not found...");
+    return;
+  }
+  new->prev = curr->prev;
+  new->next = curr;
+  curr->prev->next = new;
+  curr->prev = new;
+}
+//-----------------------insert after function-----------------------
+void insertAfter(int value, int key)
+{
+  if (head == NULL)
+  {
+    printf("Link-list is empty...");
+    return;
+  }
+  struct node *curr, *new;
+  new = (struct node *)malloc(sizeof(struct node));
+  new->data = value;
+  new->prev = new->next = NULL;
+  curr = head;
+  while (curr != NULL && curr->data != key)
+  {
+    curr = curr->next;
+  }
+  if (curr == NULL)
+  {
+    printf("key doesn't exist...");
+    return;
+  }
+  if (curr->next == NULL)
+  {
+    curr->next = new;
+    new->prev = curr;
+    return;
+  }
+  new->prev = curr;
+  new->next = curr->next;
+  curr->next = new;
+  new->next->prev = new;
+}
+//------------------display function-----------------------
+void display()
+{
+  if (head == NULL)
+  {
+    printf("link-list is empty..");
+    return;
+  }
+  struct node *curr;
+  curr = head;
+  while (curr != NULL)
+  {
+    printf("<--%d-->", curr->data);
+    curr = curr->next;
+  }
+}
+//------------------delete at beginning--------------
+void deleteAtBeg()
+{
+  if (head == NULL)
+  {
+    printf("Link-list is empty...");
+    return;
+  }
+  struct node *temp;
+  temp = head;
+  head = head->next;
+  free(temp);
+  head->prev = NULL;
+}
+//----------------------delete at end-----------------------
+void deleteAtEnd()
+{
+  if (head == NULL)
+  {
+    printf("link-list is empty..");
+    return;
+  }
+  struct node *curr;
+  curr = head;
+  while (curr->next != NULL)
+  {
+    curr = curr->next;
+  }
+  curr->prev->next = NULL;
+  free(curr);
+}
+//------------------delete before---------------------
+void deleteBefore(int key)
+{
+  if (head == NULL || head->data == key || head->next == NULL)
+  {
+    printf("deletion can not be done...");
+    return;
+  }
+  if (head->next->data == key)
+  {
+    deleteAtBeg();
+    return;
+  }
+  struct node *curr = head->next, *prev, *beforePrev;
+  while (curr != NULL && curr->data != key)
+  {
     curr = curr->next;
   }
   if (curr == NULL)
@@ -400,15 +341,84 @@ void delete(int key)
     printf("value doesn't exist...");
     return;
   }
-  prev->next = curr->next;
+  prev = curr->prev;
+  beforePrev = prev->prev;
+
+  beforePrev->next = curr;
+  curr->prev = beforePrev;
+  free(prev);
+}
+//------------------delete after function--------------------
+void deleteAfter(int key)
+{
+  if (head == NULL || head->next == NULL)
+  {
+    printf("deletion can not be done...");
+    return;
+  }
+  struct node *curr;
+  curr = head;
+  while (curr != NULL && curr->data != key)
+  {
+    curr = curr->next;
+  }
+  if (curr == NULL)
+  {
+    printf("key not found ...");
+    return;
+  }
+  if (curr->next == NULL)
+  {
+    return;
+  }
+  struct node *temp = curr->next;
+  curr->next = temp->next;
+  if (temp->next != NULL)
+    temp->next->prev = temp->prev;
+  free(temp);
+}
+//-----------------delete function--------------
+void delete(int key)
+{
+  if (head == NULL)
+  {
+    printf("link-list is empty..");
+    return;
+  }
+  struct node *curr;
+  curr = head;
+  if (head->data == key)
+  {
+    head = head->next;
+    head->prev = NULL;
+    free(curr);
+    return;
+  }
+  while (curr != NULL && curr->data != key)
+  {
+    curr = curr->next;
+  }
+  if (curr == NULL)
+  {
+    printf("value doesn't exist...");
+    return;
+  }
+  if (curr->next == NULL)
+  {
+    curr->prev->next = NULL;
+    free(curr);
+    return;
+  }
+  curr->prev->next = curr->next;
+  curr->next->prev = curr->prev;
   free(curr);
 }
-//-----------------count nodes---------------
+//-----------------count nodes function-------------------
 void countNodes()
 {
   if (head == NULL)
   {
-    printf("link-list is empty:");
+    printf("link-list is empty..");
     return;
   }
   struct node *curr;
@@ -419,17 +429,18 @@ void countNodes()
     count++;
     curr = curr->next;
   }
-  printf("Total Number of nodes is %d", count);
+  printf("total number of nodes is %d", count);
+  return;
 }
-//-----------------------sort function------------------------
+//---------------------sort function-------------
 void sort()
 {
-  if (head == NULL || head->next == NULL)
+  if (head == NULL)
   {
+    printf("link-list is empty...");
     return;
   }
   struct node *i, *j;
-  int temp;
   i = head;
   while (i->next != NULL)
   {
@@ -438,31 +449,31 @@ void sort()
     {
       if (j->data < i->data)
       {
-        temp = i->data;
-        i->data = j->data;
-        j->data = temp;
+        int temp = j->data;
+        j->data = i->data;
+        i->data = temp;
       }
       j = j->next;
     }
     i = i->next;
   }
 }
-//-----------------------reverse function----------------------
+//----------------------reverse function-----------------
 void reverse()
 {
   if (head == NULL || head->next == NULL)
   {
     return;
   }
-  struct node *prev, *curr, *next;
-  prev = NULL;
+  struct node *curr, *next;
   curr = head;
+  head = NULL;
   while (curr != NULL)
   {
     next = curr->next;
-    curr->next = prev;
-    prev = curr;
+    curr->next = head;
+    curr->prev = next;
+    head = curr;
     curr = next;
   }
-  head = prev;
 }
