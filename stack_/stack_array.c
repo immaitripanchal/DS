@@ -82,7 +82,7 @@ void push(int value)
     printf("overflow...stack is full value can not be inserted..\n");
     return;
   }
-  return stack[top++];
+  stack[++top] = value;
 }
 //-------------------pop function-----------------
 int pop()
