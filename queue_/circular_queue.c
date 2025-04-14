@@ -82,6 +82,7 @@ int dequeue()
     return data;
   }
   front = (front + 1) % MAX;
+  return data;
 }
 //----------------------display function---------------
 void display()
